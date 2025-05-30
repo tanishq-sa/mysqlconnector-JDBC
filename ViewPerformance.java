@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-// Removed incorrect import of java.awt.List
 import java.sql.*;
 import java.util.*;
 
@@ -80,7 +79,7 @@ public class ViewPerformance extends JFrame {
 
                 percentages.add(percent);
                 subjectLines.add(String.format("Subject: %s | Score: %d/%d (%.2f%%)", subject, score, max, percent));
-                percentMap.put(subject + "_" + score + "_" + max, percent);  // Unique key
+                percentMap.put(subject + "_" + score + "_" + max, percent);
             }
 
             if (percentages.isEmpty()) {
@@ -93,7 +92,8 @@ public class ViewPerformance extends JFrame {
             double min = Collections.min(percentages);
 
             StringBuilder sb = new StringBuilder();
-            sb.append("📄 Results for Student: ").append(studentName).append(" (ID: ").append(studentId).append(")\n\n");
+            sb.append("📄 Results for Student: ").append(studentName).append(" (ID: ").append(studentId).append(")\n");
+            sb.append("🧾 Format: Subject | Score/Max (Percentage%)\n\n");
 
             for (String line : subjectLines) {
                 sb.append(line).append("\n");
@@ -108,9 +108,8 @@ public class ViewPerformance extends JFrame {
             int lowCount = 0;
             for (Map.Entry<String, Double> entry : percentMap.entrySet()) {
                 if (entry.getValue() < 40) {
-                    String subject = entry.getKey().split("_")[0];  // Extract subject from key
-                    sb.append("- ").append(subject)
-                      .append(" (").append(String.format("%.2f", entry.getValue())).append("%)\n");
+                    String subject = entry.getKey().split("_")[0];
+                    sb.append("- ").append(subject).append(" (").append(String.format("%.2f", entry.getValue())).append("%)\n");
                     lowCount++;
                 }
             }
